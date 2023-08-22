@@ -6,7 +6,7 @@ using System.Reflection;
 namespace KitchenToggleAct.Patches
 {
     [HarmonyPatch]
-    static class PerformCommandRouter_Patch
+    internal static class PerformCommandRouter_Patch
     {
         static MethodBase TargetMethod()
         {

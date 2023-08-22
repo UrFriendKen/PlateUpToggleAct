@@ -7,9 +7,9 @@ using System.Reflection;
 namespace KitchenToggleAct.Patches
 {
     [HarmonyPatch]
-    static class NetworkRouter_Patch
+    internal static class NetworkRouter_Patch
     {
-        public static HashSet<int> _actHolds = new HashSet<int>();
+        internal static HashSet<int> ActHolds = new HashSet<int>();
 
         static MethodBase TargetMethod()
         {
@@ -22,25 +22,25 @@ namespace KitchenToggleAct.Patches
             {
                 if (update.Data.State.InteractAction == ButtonState.Pressed)
                 {
-                    if (!_actHolds.Contains(update.Data.User))
+                    if (!ActHolds.Contains(update.Data.User))
                     {
-                        _actHolds.Add(update.Data.User);
+                        ActHolds.Add(update.Data.User);
                     }
                     else
                     {
-                        _actHolds.Remove(update.Data.User);
+                        ActHolds.Remove(update.Data.User);
                     }
                 }
-                else if (_actHolds.Contains(update.Data.User))
+                else if (ActHolds.Contains(update.Data.User))
                 {
                     update.Data.State.InteractAction = ButtonState.Held;
                 }
 
                 if (update.Data.State.GrabAction == ButtonState.Pressed)
                 {
-                    if (_actHolds.Contains(update.Data.User))
+                    if (ActHolds.Contains(update.Data.User))
                     {
-                        _actHolds.Remove(update.Data.User);
+                        ActHolds.Remove(update.Data.User);
                     }
                 }
             }

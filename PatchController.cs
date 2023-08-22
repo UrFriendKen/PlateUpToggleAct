@@ -17,7 +17,7 @@ namespace KitchenToggleAct
 
         static Dictionary<int, (Entity, Entity)> _playersLookingAt = new Dictionary<int, (Entity, Entity)>();
 
-        static Dictionary<int, Entity> _playerActHolds = new Dictionary<int, Entity>();
+        internal static Dictionary<int, Entity> PlayerActHolds = new Dictionary<int, Entity>();
 
         EntityQuery LookedAts;
         EntityQuery ActLookedAts;
@@ -79,7 +79,7 @@ namespace KitchenToggleAct
                 if (!tempPlayerActHolds.ContainsKey(actLookedAtPlayers[i].ID))
                     tempPlayerActHolds.Add(actLookedAtPlayers[i].ID, playerEntities[i]);
             }
-            _playerActHolds = tempPlayerActHolds;
+            PlayerActHolds = tempPlayerActHolds;
         }
 
         // Return true if InteractionAction hold is enabled
@@ -100,7 +100,7 @@ namespace KitchenToggleAct
                 }
             }
 
-            if (_playerActHolds.TryGetValue(playerID, out Entity playerEnt))
+            if (PlayerActHolds.TryGetValue(playerID, out Entity playerEnt))
             {
                 _instance.EntityManager.RemoveComponent<CActLookedAt>(playerEnt);
             }
@@ -110,7 +110,7 @@ namespace KitchenToggleAct
         }
         internal static bool OnGrabPressed(int playerID)
         {
-            if (_playerActHolds.TryGetValue(playerID, out Entity playerEnt))
+            if (PlayerActHolds.TryGetValue(playerID, out Entity playerEnt))
             {
                 _instance.EntityManager.RemoveComponent<CActLookedAt>(playerEnt);
             }
@@ -120,7 +120,7 @@ namespace KitchenToggleAct
         // Return true if should update InteractAction button state to held.
         internal static bool ShouldActHold(int playerID)
         {
-            return _playerActHolds.ContainsKey(playerID);
+            return PlayerActHolds.ContainsKey(playerID);
         }
     }
 }
