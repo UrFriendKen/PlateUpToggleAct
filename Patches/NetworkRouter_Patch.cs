@@ -36,7 +36,7 @@ namespace KitchenToggleAct.Patches
                     update.Data.State.InteractAction = ButtonState.Held;
                 }
 
-                if (update.Data.State.GrabAction == ButtonState.Pressed)
+                if (update.Data.State.GrabAction == ButtonState.Pressed || update.Data.State.SecondaryAction2 == ButtonState.Pressed)
                 {
                     if (ActHolds.Contains(update.Data.User))
                     {
